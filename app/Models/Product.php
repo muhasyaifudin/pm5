@@ -27,8 +27,10 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
         'description',
         'price',
+        'image',
         'category_id',  
     ];
 
@@ -50,15 +52,5 @@ class Product extends Model
     public function saleProduct(): HasMany
     {
         return $this->hasMany(SaleProduct::class);
-    }
-
-    /**
-     * Relations with Sale
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function sale(): HasMany
-    {
-        return $this->hasMany(Sale::class);
     }
 }
