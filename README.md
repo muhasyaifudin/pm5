@@ -1,3 +1,5 @@
+### Project
+
 **Case Study: Online Shop**
 
 **Project Summary**
@@ -87,3 +89,12 @@ Tujuan dari proyek ini adalah mengembangkan toko online yang user friendly yang 
 - **Frontend**: Blade Engine untuk tampilan, Bootstrap untuk styling
 - **Otentikasi**: Gunakan sistem Auth Laravel.
 - **Gateway Pembayaran**: Midtrans dll.
+
+
+### Pertemuan Ke 1
+- Pembuatan Project
+- Koneksi ke database (PostgreSQL/MySQL)
+
+### Pertemuan Ke 2
+- Pembuatan Migration
+  
