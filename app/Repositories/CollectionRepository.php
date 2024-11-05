@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use Illuminate\Support\Collection;
+
 class CollectionRepository
 {
     public function __construct()
@@ -58,8 +60,49 @@ class CollectionRepository
         ];
     }
 
-    public function getReport(): array
+    public function getReport(): array|Collection
     {
+        // Array 
+        $numbers = [1, 2, 3, 4, 5];
+        $names = ['Alice', 'Bob', 'Charlie', 'David', 'Eve'];
+
+        $name_1 = $names[0];
+        $name_2 = $names[1];
+
+        // Associate Array
+        $profile = [
+            "name" => "Syaifudin",
+            "address" => "Jogja",
+            "job" => "Programmer",
+            "age" => 25,
+        ];
+
+        $profiles = [
+            [
+                "name" => "Syaifudin",
+                "address" => "Jogja",
+                "job" => "Programmer",
+                "age" => 25,
+            ],
+            [
+                "name" => "Syaifudin",
+                "address" => "Jogja",
+                "job" => "Programmer",
+                "age" => 25,
+            ],
+            [
+                "name" => "Syaifudin",
+                "address" => "Jogja",
+                "job" => "Programmer",
+                "age" => 25,
+            ],
+        ];
+
+        $name = $profile['name']; // Syaifudin
+        $address = $profile['address']; // Jogja
+        $job = $profile['job']; // Programmer
+        $age = $profile['age']; // 25
+
         // Sample data: Orders with items
         $orders = collect([
             [
@@ -90,6 +133,12 @@ class CollectionRepository
 
         // 1. Group orders by customer
         $ordersByCustomer = $orders->groupBy('customer');
+        /*
+            [
+                "Alice" => [],
+                "Bob" => []
+            ]
+        */
 
         // 2. Calculate total quantity and amount per customer
         $customerSummaries = $ordersByCustomer->map(function ($customerOrders, $customerName) {
@@ -110,13 +159,50 @@ class CollectionRepository
             ];
         });
 
+        /*
+            [
+                "Alice" => [
+                    "customer" => "Alice",
+                    "total_quantity" => 6,
+                    "total_amount" => 450
+                ],
+                "Bob" => [
+                    "customer" => "Bob",
+                    "total_quantity" => 5,
+                    "total_amount" => 300
+                ]
+            ]
+        */
+
         // 3. Sort summaries by total amount spent, descending
         $sortedSummaries = $customerSummaries->sortByDesc('total_amount');
+
+        /*
+            [
+                "Bob" => [
+                    "customer" => "Bob",
+                    "total_quantity" => 5,
+                    "total_amount" => 300
+                ],
+                "Alice" => [
+                    "customer" => "Alice",
+                    "total_quantity" => 6,
+                    "total_amount" => 450
+                ]
+            ]
+        */
 
         // 4. Generate summary report
         $report = $sortedSummaries->map(function ($summary) {
             return "Customer: {$summary['customer']} - Total Quantity: {$summary['total_quantity']} - Total Amount: \${$summary['total_amount']}";
         });
+
+        /*
+            [
+                "Customer: Bob - Total Quantity: 5 - Total Amount: $300",
+                "Customer: Alice - Total Quantity: 6 - Total Amount: $450"
+            ]
+        */
 
         return $report->all();
     }

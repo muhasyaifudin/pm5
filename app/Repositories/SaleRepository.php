@@ -26,6 +26,5 @@ class SaleRepository
         $sale->delete();
 
         return $sale;
-    }
-    
+    }   
 }
