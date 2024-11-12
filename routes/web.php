@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SampleController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,3 +20,8 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/sample', [SampleController::class, 'index'])->name('sample.index');
+Route::post('/store', [SampleController::class, 'store'])->name('sample.store');
+
+Route::resource('category', CategoryController::class);
