@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SampleRequest;
+use Illuminate\Http\Request;
 
 class SampleController extends Controller
 {

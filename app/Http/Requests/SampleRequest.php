@@ -23,7 +23,7 @@ class SampleRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email:dns',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password',
             'age' => 'required|integer|min:18',
