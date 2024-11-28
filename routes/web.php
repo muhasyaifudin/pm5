@@ -25,3 +25,6 @@ Route::get('/sample', [SampleController::class, 'index'])->name('sample.index');
 Route::post('/sample', [SampleController::class, 'store'])->name('sample.store');
 
 Route::resource('category', CategoryController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

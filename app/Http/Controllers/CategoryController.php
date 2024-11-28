@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Repositories\CategoryRepository; // Import Class
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -13,7 +15,7 @@ class CategoryController extends Controller
     {
         $this->repository = new CategoryRepository(); // Definisi Repository
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -21,10 +23,7 @@ class CategoryController extends Controller
     {
         $categories = $this->repository->getData();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $categories
-        ]);
+        return view('category.index', compact('categories'));
     }
 
     /**
@@ -32,22 +31,19 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $data = $request->all();
 
         $category = $this->repository->storeData($data);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $category
-        ]);
+        return redirect()->route('category.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -63,22 +59,21 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::find($id);
+
+        return view('category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
         $data = $request->all();
 
         $category = $this->repository->updateData($id, $data);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $category
-        ]);
+        return redirect()->route('category.index')->with('success', 'Data berhasil diubah');
     }
 
     /**
@@ -88,9 +83,6 @@ class CategoryController extends Controller
     {
         $category = $this->repository->deleteData($id);
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $category
-        ]);
+        return redirect()->route('category.index')->with('success', 'Data berhasil dihapus');
     }
 }
